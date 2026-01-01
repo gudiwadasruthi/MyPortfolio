@@ -194,14 +194,14 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
 
       {isOpen && typeof document !== 'undefined' && createPortal(
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          className="fixed inset-0 z-[9999] flex items-center justify-center px-3 sm:px-4 py-4"
           role="dialog"
           aria-modal="true"
           onMouseDown={() => setIsOpen(false)}
         >
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
           <div
-            className="relative w-[90vw] md:w-[75vw] h-[75vh] rounded-2xl bg-gradient-to-br from-slate-900/95 to-slate-800/95 border border-white/10 shadow-2xl overflow-hidden flex flex-col"
+            className="relative w-full sm:w-[90vw] md:w-[75vw] md:h-[75vh] max-w-4xl max-h-[85vh] rounded-2xl bg-gradient-to-br from-slate-900/95 to-slate-800/95 border border-white/10 shadow-2xl overflow-hidden flex flex-col"
             onMouseDown={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-white/10">
@@ -218,7 +218,7 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
               </button>
             </div>
 
-            <div className="flex-1 p-3 sm:p-4">
+            <div className="flex-1 min-h-0 p-3 sm:p-4">
               {videoType === 'file' && (
                 <video
                   src={resolvedVideoUrl}

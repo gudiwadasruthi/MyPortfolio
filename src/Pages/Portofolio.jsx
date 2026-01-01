@@ -423,7 +423,8 @@ export default function FullWidthTabs() {
             border: "1px solid rgba(255, 255, 255, 0.1)",
             borderRadius: "20px",
             position: "relative",
-            overflow: "hidden",
+            // Allow tabs to scroll horizontally on small screens while preserving desktop look
+            overflow: { xs: "visible", md: "hidden" },
             "&::before": {
               content: '""',
               position: "absolute",
@@ -444,7 +445,9 @@ export default function FullWidthTabs() {
             onChange={handleChange}
             textColor="secondary"
             indicatorColor="secondary"
-            variant="fullWidth"
+            variant={isMobile ? "scrollable" : "fullWidth"}
+            scrollButtons={isMobile ? "auto" : false}
+            allowScrollButtonsMobile
             sx={{
               // Existing styles remain unchanged
               minHeight: "70px",
@@ -456,7 +459,7 @@ export default function FullWidthTabs() {
                 transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                 padding: "20px 0",
                 zIndex: 1,
-                margin: "8px",
+                margin: { xs: "2px", sm: "8px" },
                 borderRadius: "12px",
                 "&:hover": {
                   color: "#ffffff",
