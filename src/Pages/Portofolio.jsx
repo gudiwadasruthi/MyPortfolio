@@ -49,7 +49,7 @@ const projectsData = [
     id: "ReadWise AI",
     Title: "ReadWise AI",
     Description: "An AI-powered web app to upload PDFs, analyze them with AI, and ask questions about their content. Built for the Adobe Hackathon 2025 with a fast, containerized backend and interactive frontend.",
-    Img: "/ReadWiseAI (3).png",  // Fallback image
+    Img: "/ReadWiseAI.jpeg",  // Fallback image
     Video: "https://pdf-chatbot-chi.vercel.app/",  // Add your demo video file here
     Link: "https://pdf-chatbot-chi.vercel.app/",  // Live demo link
     TechStack: [
@@ -88,7 +88,7 @@ const projectsData = [
   Title: "NEX_OFF – Offline AI Chatbot with Document Intelligence",
   Description:
     "An offline-first AI-powered desktop chatbot that enables intelligent document-based question answering, speech interaction, and secure local processing without relying on constant internet connectivity.",
-  Img: "/nexoff.png", // Fallback image (replace with your banner or screenshot)
+  Img: "/nexoff.jpeg", // Fallback image (replace with your banner or screenshot)
   Video: "https://github.com/gudiwadasruthi/NEX_OFF", // Demo or repo link
   Link: "https://github.com/gudiwadasruthi/NEX_OFF",
   TechStack: [
@@ -123,7 +123,7 @@ const projectsData = [
   Title: "ShowBuzz – Online Movie Ticket Booking System",
   Description:
     "A full-stack web application for online movie ticket booking that allows users to browse movies, select theaters and showtimes, choose seats interactively, and book tickets instantly through a user-friendly interface.",
-  Img: "/showbuzz.png", // Fallback image (use banner or screenshot)
+  Img: "/showbuzz.jpeg", // Fallback image (use banner or screenshot)
   Video: "https://github.com/gudiwadasruthi/Movie-ticket-booking", // Demo or repo link
   Link: "https://github.com/gudiwadasruthi/Movie-ticket-booking",
   TechStack: [
@@ -154,7 +154,7 @@ const projectsData = [
   Title: "Smart Crime Reporting System",
   Description:
     "A web-based platform that enables citizens to report crimes anonymously, share real-time location, and upload photo or video evidence to ensure faster and safer incident reporting.",
-  Img: "/smart-crime.png", // Fallback image (use banner or screenshot)
+  Img: "/smart-crime.jpeg", // Fallback image (use banner or screenshot)
   Video: "https://smart-crime-reporting.onrender.com/",
   Link: "https://smart-crime-reporting.onrender.com/",
   TechStack: [
