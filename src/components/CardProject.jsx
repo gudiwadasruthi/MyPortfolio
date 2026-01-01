@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 
@@ -191,7 +192,7 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
         </div>
       </div>
 
-      {isOpen && (
+      {isOpen && typeof document !== 'undefined' && createPortal(
         <div
           className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
           role="dialog"
@@ -200,7 +201,7 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
         >
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
           <div
-            className="relative w-full max-w-4xl rounded-2xl bg-gradient-to-br from-slate-900/95 to-slate-800/95 border border-white/10 shadow-2xl overflow-hidden"
+            className="relative w-[90vw] md:w-[75vw] h-[75vh] rounded-2xl bg-gradient-to-br from-slate-900/95 to-slate-800/95 border border-white/10 shadow-2xl overflow-hidden flex flex-col"
             onMouseDown={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-white/10">
@@ -217,19 +218,19 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
               </button>
             </div>
 
-            <div className="p-3 sm:p-4">
+            <div className="flex-1 p-3 sm:p-4">
               {videoType === 'file' && (
                 <video
                   src={resolvedVideoUrl}
                   controls
                   autoPlay
                   playsInline
-                  className="w-full max-h-[70vh] rounded-xl bg-black"
+                  className="w-full h-full rounded-xl bg-black object-contain"
                 />
               )}
 
               {videoType === 'youtube' && (
-                <div className="w-full aspect-video rounded-xl overflow-hidden bg-black">
+                <div className="w-full h-full rounded-xl overflow-hidden bg-black">
                   <iframe
                     src={toYouTubeEmbedUrl(Video)}
                     title={`${Title} demo video`}
@@ -244,7 +245,7 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
               )}
 
               {videoType === 'vimeo' && (
-                <div className="w-full aspect-video rounded-xl overflow-hidden bg-black">
+                <div className="w-full h-full rounded-xl overflow-hidden bg-black">
                   <iframe
                     src={toVimeoEmbedUrl(Video)}
                     title={`${Title} demo video`}
@@ -259,7 +260,7 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
               )}
 
               {videoType === 'gdrive' && (
-                <div className="w-full aspect-video rounded-xl overflow-hidden bg-black">
+                <div className="w-full h-full rounded-xl overflow-hidden bg-black">
                   <iframe
                     src={toGoogleDrivePreviewUrl(Video)}
                     title={`${Title} demo video`}
@@ -305,7 +306,8 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
               </div>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
