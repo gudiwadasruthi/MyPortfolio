@@ -224,9 +224,10 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-             I’m a Computer Science Engineering student who enjoys learning how applications are built and maintained in the real world. I like exploring what happens behind the scenes, such as backend logic, databases, and how apps are deployed. I prefer learning by doing, so I spend time building small projects, testing things out, and improving them step by step.<br></br>
-             Right now, I’m getting hands-on practice with AWS, working with services like EC2, RDS, S3, IAM, and VPC, while also strengthening my app development basics. I’m someone who learns a lot by experimenting, making mistakes, and fixing them. I’m always open to beginner-friendly and academic projects where I can learn, grow, and enjoy the journey of becoming a better developer.
+            I’m a Computer Science Engineering student who enjoys learning how apps are built and how they work behind the scenes. I like exploring backend basics, databases, and simple app structures by building small projects and learning step by step.<br /><br />
+            Right now, I’m doing hands-on practice with AWS, learning services like EC2, RDS, S3, IAM, and VPC. I enjoy trying things out, fixing mistakes, and slowly improving my skills. I’m open to beginner-friendly and academic projects where I can learn and grow.<br /><br />
             </p>
+
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
               <a href="https://drive.google.com/file/d/1HXs0hSQoOW6YvIcXursKCEC3DZ9nVH0u/view?usp=sharing" className="w-full lg:w-auto">
