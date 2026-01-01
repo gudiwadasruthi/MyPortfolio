@@ -12,7 +12,8 @@ import TechStackIcon from "../components/TechStackIcon";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Certificate from "../components/Certificate";
-import { Code, Award, Boxes } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Code, Award, Boxes, Briefcase, ArrowRight } from "lucide-react";
 
 // Static Projects Data
 const projectsData = [
@@ -184,6 +185,25 @@ const projectsData = [
 },
 
 
+];
+
+const experienceData = [
+  {
+    id: "exp1",
+    role: "Salesforce Developer Intern",
+    company: "Salesforce",
+    location: "Remote",
+    period: "June 2025 – July 2025",
+    type: "Internship",
+    certificateImg: "/Salesforce.png",
+    highlights: [
+      "Worked on Salesforce backend development using Apex and SOQL",
+      "Developed and maintained Apex Triggers, Handler classes, and Batch jobs",
+      "Implemented scheduled automation for order processing and stock updates",
+      "Debugged and fixed compile-time and logic errors to improve system reliability",
+    ],
+    tech: ["Salesforce", "Apex", "SOQL", "Triggers", "Batch Apex"],
+  },
 ];
 
 // Static Certificates Data
@@ -361,6 +381,7 @@ export default function FullWidthTabs() {
     // Store in localStorage for other components to use
     localStorage.setItem("projects", JSON.stringify(projectsData));
     localStorage.setItem("certificates", JSON.stringify(certificatesData));
+    localStorage.setItem("experience", JSON.stringify(experienceData));
   }, []);
 
   const handleChange = (event, newValue) => {
@@ -484,6 +505,11 @@ export default function FullWidthTabs() {
               label="Tech Stack"
               {...a11yProps(2)}
             />
+            <Tab
+              icon={<Briefcase className="mb-2 w-5 h-5 transition-all duration-300" />}
+              label="Experience"
+              {...a11yProps(3)}
+            />
           </Tabs>
         </AppBar>
 
@@ -557,6 +583,70 @@ export default function FullWidthTabs() {
                     data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
                   >
                     <TechStackIcon TechStackIcon={stack.icon} Language={stack.language} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </TabPanel>
+
+          <TabPanel value={value} index={3} dir={theme.direction}>
+            <div className="container mx-auto flex justify-center items-center overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-5 w-full">
+                {experienceData.map((exp, index) => (
+                  <div
+                    key={exp.id || index}
+                    data-aos={index % 3 === 0 ? "fade-up-right" : index % 3 === 1 ? "fade-up" : "fade-up-left"}
+                    data-aos-duration={index % 3 === 0 ? "1000" : index % 3 === 1 ? "1200" : "1000"}
+                    className="relative"
+                  >
+                    <div className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl overflow-hidden h-full">
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#6366f1]/10 to-[#a855f7]/10" />
+
+                      <div className="relative p-6 space-y-4">
+                        <div className="relative overflow-hidden rounded-xl border border-white/10 bg-black/20">
+                          <img
+                            src={exp.certificateImg || "/Salesforce.png"}
+                            alt={exp.role}
+                            className="w-full h-44 object-cover transform transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="space-y-1">
+                            <h3 className="text-white font-semibold text-lg leading-snug">{exp.role}</h3>
+                            <p className="text-slate-300 text-sm">
+                              {exp.company}
+                              {exp.location ? ` • ${exp.location}` : ""}
+                            </p>
+                          </div>
+
+                          <div className="text-right">
+                            <p className="text-slate-400 text-xs whitespace-nowrap">{exp.period}</p>
+                            <p className="text-slate-400 text-xs whitespace-nowrap">{exp.type}</p>
+                          </div>
+                        </div>
+
+                        {Array.isArray(exp.highlights) && exp.highlights.length > 0 && (
+                          <p className="text-gray-300/80 text-sm leading-relaxed line-clamp-2">
+                            {exp.highlights[0]}
+                          </p>
+                        )}
+
+                        <div className="pt-2 flex items-center justify-end">
+                          {exp.id ? (
+                            <Link
+                              to={`/experience/${exp.id}`}
+                              className="inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/90 transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                            >
+                              <span className="text-sm font-medium">Details</span>
+                              <ArrowRight className="w-4 h-4" />
+                            </Link>
+                          ) : (
+                            <span className="text-gray-500 text-sm">Details Not Available</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>

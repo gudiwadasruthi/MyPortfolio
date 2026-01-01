@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import Portofolio from "./Pages/Portofolio";
 import ContactPage from "./Pages/Contact";
 import ProjectDetails from "./components/ProjectDetail";
+import ExperienceDetail from "./components/ExperienceDetail";
 import WelcomeScreen from "./Pages/WelcomeScreen";
 import { AnimatePresence } from 'framer-motion';
 import notfound from "./Pages/404";
@@ -45,6 +46,13 @@ const ProjectPageLayout = () => (
   </>
 );
 
+const ExperiencePageLayout = () => (
+  <>
+    <ExperienceDetail />
+    <Footer />
+  </>
+);
+
 function App() {
   const [showWelcome, setShowWelcome] = useState(true);
 
@@ -53,6 +61,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage showWelcome={showWelcome} setShowWelcome={setShowWelcome} />} />
         <Route path="/project/:id" element={<ProjectPageLayout />} />
+        <Route path="/experience/:id" element={<ExperiencePageLayout />} />
          <Route path="*" element={<NotFoundPage />} /> {/* Ini route 404 */}
       </Routes>
     </BrowserRouter>
