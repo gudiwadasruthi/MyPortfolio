@@ -17,6 +17,49 @@ const isVideoFileUrl = (url) => {
   return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
 };
 
+const isGoogleDriveUrl = (url) => {
+  if (!url) return false;
+  return /^(https?:\/\/)?(www\.)?drive\.google\.com\//i.test(url);
+};
+
+const toGoogleDrivePreviewUrl = (url) => {
+  if (!isGoogleDriveUrl(url)) return url;
+  // Match /file/d/<ID>/
+  const matchFile = url.match(/drive\.google\.com\/file\/d\/([^/]+)\//i);
+  if (matchFile && matchFile[1]) return `https://drive.google.com/file/d/${matchFile[1]}/preview`;
+  // Match id=<ID>
+  const matchId = url.match(/[?&]id=([^&]+)/i);
+  if (matchId && matchId[1]) return `https://drive.google.com/file/d/${matchId[1]}/preview`;
+  return url;
+};
+
+const toGoogleDriveDownloadUrl = (url) => {
+  if (!isGoogleDriveUrl(url)) return url;
+  const matchFile = url.match(/drive\.google\.com\/file\/d\/([^/]+)\//i);
+  const id = matchFile && matchFile[1] ? matchFile[1] : (url.match(/[?&]id=([^&]+)/i)?.[1] || null);
+  return id ? `https://drive.google.com/uc?export=download&id=${id}` : url;
+};
+
+const toYouTubeEmbedUrl = (url) => {
+  if (!url) return url;
+  // youtu.be/<id>
+  let m = url.match(/youtu\.be\/([\w-]{11})/i);
+  if (m) return `https://www.youtube.com/embed/${m[1]}`;
+  // youtube.com/watch?v=<id>
+  m = url.match(/[?&]v=([\w-]{11})/i);
+  if (m) return `https://www.youtube.com/embed/${m[1]}`;
+  // already embed
+  if (/youtube\.com\/embed\//i.test(url)) return url;
+  return url;
+};
+
+const toVimeoEmbedUrl = (url) => {
+  if (!url) return url;
+  const m = url.match(/vimeo\.com\/(\d+)/i);
+  if (m) return `https://player.vimeo.com/video/${m[1]}`;
+  return url;
+};
+
 const resolvePublicAssetUrl = (url) => {
   if (!url) return url;
   if (/^https?:\/\//i.test(url)) return url;
@@ -30,12 +73,15 @@ const resolvePublicAssetUrl = (url) => {
 
 const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
 
   const videoType = useMemo(() => {
     if (!Video) return 'none';
     if (isVideoFileUrl(Video)) return 'file';
     if (isYouTubeUrl(Video)) return 'youtube';
     if (isVimeoUrl(Video)) return 'vimeo';
+    if (isGoogleDriveUrl(Video)) return 'gdrive';
     return 'link';
   }, [Video]);
 
@@ -47,8 +93,10 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
 
   const handleViewProject = (e) => {
     if (Video) {
-      if (videoType === 'file' || videoType === 'youtube' || videoType === 'vimeo') {
+      if (videoType === 'file' || videoType === 'youtube' || videoType === 'vimeo' || videoType === 'gdrive') {
         e.preventDefault();
+        setTimedOut(false);
+        setIsLoading(true);
         setIsOpen(true);
         return;
       }
@@ -80,7 +128,11 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
       if (evt.key === 'Escape') setIsOpen(false);
     };
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    const t = window.setTimeout(() => setTimedOut(true), 8000);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      window.clearTimeout(t);
+    };
   }, [isOpen]);
   
 
@@ -179,11 +231,14 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
               {videoType === 'youtube' && (
                 <div className="w-full aspect-video rounded-xl overflow-hidden bg-black">
                   <iframe
-                    src={Video}
+                    src={toYouTubeEmbedUrl(Video)}
                     title={`${Title} demo video`}
                     className="w-full h-full"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    onLoad={() => setIsLoading(false)}
                   />
                 </div>
               )}
@@ -191,15 +246,64 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
               {videoType === 'vimeo' && (
                 <div className="w-full aspect-video rounded-xl overflow-hidden bg-black">
                   <iframe
-                    src={Video}
+                    src={toVimeoEmbedUrl(Video)}
                     title={`${Title} demo video`}
                     className="w-full h-full"
                     allow="autoplay; fullscreen; picture-in-picture"
                     allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    onLoad={() => setIsLoading(false)}
+                  />
+                </div>
+              )}
+
+              {videoType === 'gdrive' && (
+                <div className="w-full aspect-video rounded-xl overflow-hidden bg-black">
+                  <iframe
+                    src={toGoogleDrivePreviewUrl(Video)}
+                    title={`${Title} demo video`}
+                    className="w-full h-full"
+                    allow="autoplay"
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    onLoad={() => setIsLoading(false)}
                   />
                 </div>
               )}
             </div>
+            {isLoading && !timedOut && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                <div className="h-10 w-10 rounded-full border-2 border-white/20 border-t-white animate-spin"></div>
+              </div>
+            )}
+
+            {(timedOut) && (
+              <div className="px-4 pb-4 text-center text-white/80">
+                <div className="text-sm mb-3">The embedded player is taking longer than usual.</div>
+                <div className="flex items-center justify-center gap-3">
+                  <a
+                    href={videoType === 'gdrive' ? toGoogleDrivePreviewUrl(Video) : (videoType === 'file' ? resolvedVideoUrl : Video)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                  >
+                    Open in new tab
+                  </a>
+                  {videoType === 'gdrive' && (
+                    <a
+                      href={toGoogleDriveDownloadUrl(Video)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                    >
+                      Download
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
