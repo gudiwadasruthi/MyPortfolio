@@ -1,14 +1,52 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ArrowRight } from 'lucide-react';
 
-const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
-  const handleLiveDemo = (e) => {
-    if (!ProjectLink) {
-      console.log("ProjectLink is empty");
-      e.preventDefault();
-      alert("Live demo link is not available");
+const isYouTubeUrl = (url) => {
+  if (!url) return false;
+  return /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//i.test(url);
+};
+
+const isVimeoUrl = (url) => {
+  if (!url) return false;
+  return /^(https?:\/\/)?(www\.)?vimeo\.com\//i.test(url);
+};
+
+const isVideoFileUrl = (url) => {
+  if (!url) return false;
+  return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
+};
+
+const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const videoType = useMemo(() => {
+    if (!Video) return 'none';
+    if (isVideoFileUrl(Video)) return 'file';
+    if (isYouTubeUrl(Video)) return 'youtube';
+    if (isVimeoUrl(Video)) return 'vimeo';
+    return 'link';
+  }, [Video]);
+
+  const handleViewProject = (e) => {
+    if (Video) {
+      if (videoType === 'file' || videoType === 'youtube' || videoType === 'vimeo') {
+        e.preventDefault();
+        setIsOpen(true);
+        return;
+      }
+
+      window.open(Video, '_blank', 'noopener,noreferrer');
+      return;
     }
+
+    if (ProjectLink) {
+      window.open(ProjectLink, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    e.preventDefault();
+    alert('Live demo link is not available');
   };
   
   const handleDetails = (e) => {
@@ -18,6 +56,15 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
       alert("Project details are not available");
     }
   };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (evt) => {
+      if (evt.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen]);
   
 
   return (
@@ -45,20 +92,14 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
             </p>
             
             <div className="pt-4 flex items-center justify-between">
-              {ProjectLink ? (
-                <a
-                  href={ProjectLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={handleLiveDemo}
-                  className="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors duration-200"
-                >
-                  <span className="text-sm font-medium">View Project</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              ) : (
-                <span className="text-gray-500 text-sm">Project Link Not Available</span>
-              )}
+              <button
+                type="button"
+                onClick={handleViewProject}
+                className="inline-flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors duration-200"
+              >
+                <span className="text-sm font-medium">View Project</span>
+                <ExternalLink className="w-4 h-4" />
+              </button>
               
      
 
@@ -80,6 +121,71 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, id }) => {
           <div className="absolute inset-0 border border-white/0 group-hover:border-purple-500/50 rounded-xl transition-colors duration-300 -z-50"></div>
         </div>
       </div>
+
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          onMouseDown={() => setIsOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+          <div
+            className="relative w-full max-w-4xl rounded-2xl bg-gradient-to-br from-slate-900/95 to-slate-800/95 border border-white/10 shadow-2xl overflow-hidden"
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-white/10">
+              <div className="min-w-0">
+                <div className="text-sm sm:text-base font-semibold text-white/90 truncate">{Title}</div>
+                <div className="text-xs text-white/50 truncate">Demo Preview</div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/80 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+
+            <div className="p-3 sm:p-4">
+              {videoType === 'file' && (
+                <video
+                  src={Video}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="w-full max-h-[70vh] rounded-xl bg-black"
+                />
+              )}
+
+              {videoType === 'youtube' && (
+                <div className="w-full aspect-video rounded-xl overflow-hidden bg-black">
+                  <iframe
+                    src={Video}
+                    title={`${Title} demo video`}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              )}
+
+              {videoType === 'vimeo' && (
+                <div className="w-full aspect-video rounded-xl overflow-hidden bg-black">
+                  <iframe
+                    src={Video}
+                    title={`${Title} demo video`}
+                    className="w-full h-full"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

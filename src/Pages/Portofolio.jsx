@@ -22,7 +22,7 @@ const projectsData = [
     Title: "Emotion based music player",
     Description: "An innovative music player that uses facial recognition to detect emotions and play matching music. Built with modern technologies for a personalized music experience.",
     Img: "/ebm.jpg",  // Fallback image
-    Video: "https://github.com/gudiwadasruthi/Emotion-Based-Music-Player.git",  // Add your video file here
+    Video: "/emotion-music-demo%20(1).mp4",  // Add your video file here (URL encoded)
     Link: "https://github.com/gudiwadasruthi/Emotion-Based-Music-Player.git",  // Replace with your actual project URL
     TechStack: [
       "Flask",
@@ -51,7 +51,7 @@ const projectsData = [
     Title: "ReadWise AI",
     Description: "An AI-powered web app to upload PDFs, analyze them with AI, and ask questions about their content. Built for the Adobe Hackathon 2025 with a fast, containerized backend and interactive frontend.",
     Img: "/ReadWiseAI.jpeg",  // Fallback image
-    Video: "https://pdf-chatbot-chi.vercel.app/",  // Add your demo video file here
+    Video: "/Readwise.mp4",  // Add your demo video file here
     Link: "https://pdf-chatbot-chi.vercel.app/",  // Live demo link
     TechStack: [
       "FastAPI",
@@ -214,13 +214,6 @@ const certificatesData = [
     issuer: "SRM University AP",
     date: "29th May 2025",
     image: "/hackthon certificate.jpg"  // Fixed filename to match actual file
-  },
-  {
-    id: "cert2",
-    title: "Hackathon participation certificate",
-    issuer: "SRM University AP",
-    date: "29th May 2025",
-    image: "Salesforce.png"  // Fixed filename to match actual file
   },
   {
     id: "cert3",

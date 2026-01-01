@@ -128,7 +128,6 @@ const AboutPage = () => {
       { id: 'cert2' },
       { id: 'cert3' },
       { id: 'cert4' },
-      { id: 'cert5' },
     ];
     // Set start date to today for 0 years experience
     const startDate = new Date();
