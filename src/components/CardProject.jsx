@@ -17,6 +17,17 @@ const isVideoFileUrl = (url) => {
   return /\.(mp4|webm|ogg)(\?.*)?$/i.test(url);
 };
 
+const resolvePublicAssetUrl = (url) => {
+  if (!url) return url;
+  if (/^https?:\/\//i.test(url)) return url;
+
+  const base = import.meta.env.BASE_URL || '/';
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`;
+
+  if (url.startsWith('/')) return `${normalizedBase}${url.slice(1)}`;
+  return `${normalizedBase}${url}`;
+};
+
 const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,6 +38,12 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
     if (isVimeoUrl(Video)) return 'vimeo';
     return 'link';
   }, [Video]);
+
+  const resolvedVideoUrl = useMemo(() => {
+    if (!Video) return Video;
+    if (videoType === 'file') return resolvePublicAssetUrl(Video);
+    return Video;
+  }, [Video, videoType]);
 
   const handleViewProject = (e) => {
     if (Video) {
@@ -151,7 +168,7 @@ const CardProject = ({ Img, Title, Description, Link: ProjectLink, Video, id }) 
             <div className="p-3 sm:p-4">
               {videoType === 'file' && (
                 <video
-                  src={Video}
+                  src={resolvedVideoUrl}
                   controls
                   autoPlay
                   playsInline
