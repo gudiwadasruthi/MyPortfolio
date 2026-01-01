@@ -49,7 +49,7 @@ const projectsData = [
     id: "ReadWise AI",
     Title: "ReadWise AI",
     Description: "An AI-powered web app to upload PDFs, analyze them with AI, and ask questions about their content. Built for the Adobe Hackathon 2025 with a fast, containerized backend and interactive frontend.",
-    Img: "/ReadWiseAI (2).png",  // Fallback image
+    Img: "/ReadWiseAI (3).png",  // Fallback image
     Video: "https://pdf-chatbot-chi.vercel.app/",  // Add your demo video file here
     Link: "https://pdf-chatbot-chi.vercel.app/",  // Live demo link
     TechStack: [
@@ -80,7 +80,110 @@ const projectsData = [
       "Privacy First – Files processed securely with no in-browser embedding or chat history storage."
     ],
     Github: "https://github.com/gudiwadasruthi/PDF_CHATBOT.git"  // Replace if different
-  }  
+  },  
+  
+  {
+    
+  id: "nexoff-offline-ai-chatbot",
+  Title: "NEX_OFF – Offline AI Chatbot with Document Intelligence",
+  Description:
+    "An offline-first AI-powered desktop chatbot that enables intelligent document-based question answering, speech interaction, and secure local processing without relying on constant internet connectivity.",
+  Img: "/nexoff.png", // Fallback image (replace with your banner or screenshot)
+  Video: "https://github.com/gudiwadasruthi/NEX_OFF", // Demo or repo link
+  Link: "https://github.com/gudiwadasruthi/NEX_OFF",
+  TechStack: [
+    "Python",
+    "Flask",
+    "Electron.js",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Bootstrap 5",
+    "SQLite",
+    "RAG (Retrieval-Augmented Generation)",
+    "Vosk Speech Recognition",
+    "PDF.js",
+    "Docker"
+  ],
+  Features: [
+    "Offline-first AI chatbot capable of running fully on local systems without internet dependency",
+    "Document Intelligence system that allows users to upload PDFs and ask contextual questions using RAG",
+    "Hybrid AI architecture supporting both local processing and optional cloud-based LLM integration",
+    "Built-in offline speech-to-text functionality using Vosk for voice-based interaction",
+    "Cross-platform desktop application developed with Electron.js for Windows, macOS, and Linux",
+    "Secure local data storage using SQLite ensuring complete data privacy",
+    "Modern and responsive user interface with Light and Dark mode support",
+    "Dockerized backend for easy deployment and environment consistency"
+  ],
+  Github: "https://github.com/gudiwadasruthi/NEX_OFF"
+
+  },
+  {
+  id: "showbuzz-movie-ticket-booking",
+  Title: "ShowBuzz – Online Movie Ticket Booking System",
+  Description:
+    "A full-stack web application for online movie ticket booking that allows users to browse movies, select theaters and showtimes, choose seats interactively, and book tickets instantly through a user-friendly interface.",
+  Img: "/showbuzz.png", // Fallback image (use banner or screenshot)
+  Video: "https://github.com/gudiwadasruthi/Movie-ticket-booking", // Demo or repo link
+  Link: "https://github.com/gudiwadasruthi/Movie-ticket-booking",
+  TechStack: [
+    "HTML5",
+    "CSS3",
+    "Bootstrap 5",
+    "JavaScript (ES6)",
+    "PHP",
+    "MySQL",
+    "REST-style APIs",
+    "XAMPP / WAMP",
+    "VS Code"
+  ],
+  Features: [
+    "User-friendly online movie ticket booking system inspired by real-world platforms like BookMyShow",
+    "Secure login system with role-based access for users and administrators",
+    "Browse movies with details such as language, duration, ratings, and showtimes",
+    "Interactive seat selection interface showing available, selected, and booked seats",
+    "Real-time ticket booking and confirmation stored in a MySQL database",
+    "Admin dashboard to manage movies, theaters, showtimes, and bookings",
+    "Well-structured backend APIs for frontend–database communication",
+    "Responsive UI built using Bootstrap for seamless experience across devices"
+  ],
+  Github: "https://github.com/gudiwadasruthi/Movie-ticket-booking"
+},
+{
+  id: "smart-crime-reporting-system",
+  Title: "Smart Crime Reporting System",
+  Description:
+    "A web-based platform that enables citizens to report crimes anonymously, share real-time location, and upload photo or video evidence to ensure faster and safer incident reporting.",
+  Img: "/smart-crime.png", // Fallback image (use banner or screenshot)
+  Video: "https://smart-crime-reporting.onrender.com/",
+  Link: "https://smart-crime-reporting.onrender.com/",
+  TechStack: [
+    "HTML5",
+    "CSS3",
+    "JavaScript",
+    "Node.js",
+    "Express.js",
+    "REST APIs",
+    "Geolocation API",
+    "Media Capture API",
+    "Multer",
+    "File System Storage",
+    "Render (Deployment)"
+  ],
+  Features: [
+    "Anonymous crime reporting system to reduce fear of retaliation and encourage public participation",
+    "Real-time GPS location detection for faster and accurate emergency response",
+    "Photo and video evidence capture directly from the browser using Media APIs",
+    "Emergency SOS feature for immediate help during critical situations",
+    "Responsive user interface optimized for both mobile and desktop devices",
+    "RESTful backend APIs built with Node.js and Express for efficient data handling",
+    "Secure file upload and organized report storage using server-side validation",
+    "Deployed on Render with HTTPS support enabling camera and location permissions"
+  ],
+  Github: "https://github.com/gudiwadasruthi/Smart-Crime-Reporting"
+},
+
+
 ];
 
 // Static Certificates Data
