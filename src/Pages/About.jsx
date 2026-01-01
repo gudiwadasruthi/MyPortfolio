@@ -118,7 +118,10 @@ const AboutPage = () => {
     // Projects and certificates data from Portofolio.jsx
     const storedProjects = [
       { id: 'emotion-music-player' },
-      { id: 'ReadWise AI' }
+      { id: 'ReadWise AI' },
+      { id: 'project3' },
+      { id: 'project4' },
+      { id: 'project5' },
     ];
     const storedCertificates = [
       { id: 'cert1' },
@@ -221,11 +224,8 @@ const AboutPage = () => {
               data-aos="fade-right"
               data-aos-duration="1500"
             >
-              
-                I'm a 3rd-year Computer Science and Engineering student at SRM University, AP, passionate about building innovative digital experiences.<br></br>
-                I have hands-on experience in web development and Python, and I'm actively exploring AI and Machine Learning.<br></br>
-                My focus is on creating projects that have real-world impact, and I'm always eager to connect, learn, and grow alongside others in the tech community.
-             
+             I’m a Computer Science Engineering student who enjoys learning how applications are built and maintained in the real world. I like exploring what happens behind the scenes, such as backend logic, databases, and how apps are deployed. I prefer learning by doing, so I spend time building small projects, testing things out, and improving them step by step.<br></br>
+             Right now, I’m getting hands-on practice with AWS, working with services like EC2, RDS, S3, IAM, and VPC, while also strengthening my app development basics. I’m someone who learns a lot by experimenting, making mistakes, and fixing them. I’m always open to beginner-friendly and academic projects where I can learn, grow, and enjoy the journey of becoming a better developer.
             </p>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
