@@ -208,7 +208,24 @@ const certificatesData = [
     issuer: "SRM University AP",
     date: "29th May 2025",
     image: "AdobeHackthon.png"  // Fixed filename to match actual file
+  },
+
+  {
+    id: "cert4",
+    title: "Google Agentic AI Day",
+    issuer: "Google AI",
+    date: "June 2025",
+    image: "Google_Agentic_AI.png"
+  },
+
+  {
+    id: "cert5",
+    title: "Machine Learning Basics - Infosis Springboard",
+    issuer: "Infosis",
+    date: "July 2025",
+    image: "Infosis_ML_Basics.png"
   }
+
 ];
 
 // Tech Stack Icons
